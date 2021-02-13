@@ -10,6 +10,14 @@
       "StackName": "amplify-contactform-dev-214649",
       "StackId": "arn:aws:cloudformation:us-east-1:985002145520:stack/amplify-contactform-dev-214649/f191a750-6ce4-11eb-9fea-0ade2cf02d6d",
       "AmplifyAppId": "d24sfnpeii645m"
+    },
+    "categories": {
+      "function": {
+        "formfunction": {
+          "deploymentBucketName": "amplify-contactform-dev-214649-deployment",
+          "s3Key": "amplify-builds/formfunction-6f4c437072386633456a-build.zip"
+        }
+      }
     }
   }
 }

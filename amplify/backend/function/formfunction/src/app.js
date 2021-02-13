@@ -18,74 +18,29 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
-// declare a new express app
-var app = express()
-app.use(bodyParser.json())
-app.use(awsServerlessExpressMiddleware.eventContext())
+const aws = require('aws-sdk')
+const docClient = aws.DynamoDB.docClient();
 
-// Enable CORS for all methods
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "*")
-  next()
-});
-
-
-/**********************
- * Example get method *
- **********************/
-
-app.get('/contact', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
-});
-
-app.get('/contact/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
-});
-
-/****************************
-* Example post method *
-****************************/
+function id() {
+  return Math.random.toString(36).substring(2) + Date.now().toString(36);
+}
 
 app.post('/contact', function(req, res) {
-  // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
-});
-
-app.post('/contact/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
-});
-
-/****************************
-* Example put method *
-****************************/
-
-app.put('/contact', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
-});
-
-app.put('/contact/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
-});
-
-/****************************
-* Example delete method *
-****************************/
-
-app.delete('/contact', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
-
-app.delete('/contact/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
+  console.log(req);
+  var params = {
+    TableName : progress.env.STORAGE_FORMTABLE_NAME,
+    Item: {
+      id: id(),
+      name: req.body.name,
+      email: req.body.email,
+      message: req.body.message
+    } 
+  }
+  docClient.put(params, function(err, data) {
+    if(err) res.json({err})
+    else res.json({success:'Contact created successfully!'})
+  })
+})
 
 app.listen(3000, function() {
     console.log("App started")

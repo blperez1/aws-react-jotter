@@ -7,19 +7,31 @@ See the License for the specific language governing permissions and limitations 
 */
 
 
-/* Amplify Params - DO NOT EDIT
-	ENV
-	REGION
-	STORAGE_FORMTABLE_ARN
-	STORAGE_FORMTABLE_NAME
-Amplify Params - DO NOT EDIT */
+
 
 var express = require('express')
 var bodyParser = require('body-parser')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
+// declare a new express app
+var app = express()
+app.use(bodyParser.json())
+app.use(awsServerlessExpressMiddleware.eventContext())
+
+// Enable CORS for all methods
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "*")
+  if('OPTIONS' === req.method){
+    res.send(200);
+  } else {
+    next()
+  }
+});
+
 const aws = require('aws-sdk')
 const docClient = aws.DynamoDB.docClient();
+
 
 function id() {
   return Math.random.toString(36).substring(2) + Date.now().toString(36);

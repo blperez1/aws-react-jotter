@@ -1,5 +1,5 @@
 {
-    "tableName": "formtable",
+    "tableName": "formTable",
     "partitionKeyName": "id",
     "partitionKeyType": "S"
 }

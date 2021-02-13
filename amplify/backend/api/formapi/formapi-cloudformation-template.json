@@ -14,15 +14,15 @@
         },
     
     
-          "functionformfunctionName": {
+          "functionformFnName": {
             "Type": "String",
-            "Default": "functionformfunctionName"
+            "Default": "functionformFnName"
           },
         
           
-          "functionformfunctionArn": {
+          "functionformFnArn": {
             "Type": "String",
-            "Default": "functionformfunctionArn"
+            "Default": "functionformFnArn"
           }
         
           
@@ -45,16 +45,16 @@
         
         
         
-      "formapi": {
+      "formAPi": {
         "Type": "AWS::ApiGateway::RestApi",
         "Properties": {
           "Description": "",
-          "Name": "formapi",
+          "Name": "formAPi",
           "Body": {
             "swagger": "2.0",
             "info": {
               "version": "2018-05-24T17:52:00Z",
-              "title": "formapi"
+              "title": "formAPi"
             },
             "host": {
                 "Fn::Join": [
@@ -176,7 +176,7 @@
                             
                             {
                                 
-                                "Ref": "functionformfunctionArn"
+                                "Ref": "functionformFnArn"
                             },
                             
                             "/invocations"
@@ -275,7 +275,7 @@
                           
                           {
                             
-                            "Ref": "functionformfunctionArn"
+                            "Ref": "functionformFnArn"
                           },
                           
                           "/invocations"
@@ -332,12 +332,12 @@
                   
         
         
-        "functionformfunctionPermissionformapi": {
+        "functionformFnPermissionformAPi": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
                 "FunctionName": 
                     {
-                        "Ref":  "functionformfunctionName"
+                        "Ref":  "functionformFnName"
                     },
                     
                     "Action": "lambda:InvokeFunction",
@@ -356,7 +356,7 @@
                             },
                             ":",
                             {
-                                "Ref": "formapi"
+                                "Ref": "formAPi"
                             },
                             "/*/*/*"
                         ]
@@ -367,7 +367,7 @@
         
         
         
-      "DeploymentAPIGWformapi": {
+      "DeploymentAPIGWformAPi": {
         "Type": "AWS::ApiGateway::Deployment",
         "Properties": {
           "Description": "The Development stage deployment of your API.",
@@ -381,7 +381,7 @@
             ]
           },
           "RestApiId": {
-            "Ref": "formapi"
+            "Ref": "formAPi"
           }
         }
       }
@@ -389,15 +389,15 @@
     "Outputs": {
         "RootUrl": {
             "Description": "Root URL of the API gateway",
-            "Value": {"Fn::Join": ["", ["https://", {"Ref": "formapi"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
+            "Value": {"Fn::Join": ["", ["https://", {"Ref": "formAPi"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
         },
         "ApiName": {
           "Description": "API Friendly name",
-          "Value": "formapi"
+          "Value": "formAPi"
         },
         "ApiId": {
           "Description": "API ID (prefix of API URL)",
-          "Value": {"Ref": "formapi"}
+          "Value": {"Ref": "formAPi"}
         }
     }
   }

@@ -1,5 +1,0 @@
-{
-    "tableName": "formTable",
-    "partitionKeyName": "id",
-    "partitionKeyType": "S"
-}

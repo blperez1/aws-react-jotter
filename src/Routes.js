@@ -3,19 +3,22 @@ import CreateJot from './CreateJot';
 import AllJotsList from './AllJotsList';
 import Login from './Login';
 import Signup from './Signup';
-import NotFound from './NotFound';
+// import NotFound from './NotFound';
 import Viewjot from './Viewjot';
 import { Route, Switch } from "react-router-dom";
+import AuthorizedRoute from "./AuthorizedRoute";
+import UnAuthorizedRoute from "./UnAuthorizedRoute";
 
-const Routes = () => 
+export default (cprops) =>
 <Switch>
-   <Route exact path="/" component={Login}/>
-   <Route exact path="/newjot" component={CreateJot} />
-   <Route exact path="/alljots" component={AllJotsList} />
-   <Route exact path="/login" component={Login} />
-   <Route exact path="/signup" component={Signup} />
-   <Route exact path="/view" component={Viewjot}/>
-   <Route component={NotFound} />
-</Switch>;
 
-export default Routes
+  <UnAuthorizedRoute path="/login" exact component={Login} cprops={cprops}/>
+  <UnAuthorizedRoute path="/signup" exact component={Signup} cprops={cprops}/>
+ 
+  <AuthorizedRoute exact path="/newjot" component={CreateJot} cprops={cprops}/>
+  <AuthorizedRoute exact path="/alljots" component={AllJotsList} cprops={cprops}/>
+  <AuthorizedRoute exact path="/viewjot" component={Viewjot} cprops={cprops}/>
+  <AuthorizedRoute exact path="/" component={AllJotsList} cprops={cprops}/>
+ 
+  {/* <Route component={NotFound} /> */}
+</Switch>;
